@@ -9,11 +9,12 @@ import sys, os
 import struct, json
 import json, sys,struct
 
-download_directory = os.path.join(os.path.expanduser("~"), "videos")
+#download_directory = os.path.join(os.path.expanduser("~"), "videos")
+download_directory = os.path.join("/tmp", "videos")
 os.makedirs(download_directory, exist_ok=True)
 
 # YT_DLP_BINARY = '/opt/homebrew/bin/yt-dlp'
-YT_DLP_BINARY = '/usr/local/bin/yt-dlp'
+YT_DLP_BINARY = '/opt/homebrew/bin/yt-dlp'
 
 # # app = typer.Typer()
 
