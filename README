@@ -1,0 +1,3 @@
+curl -X POST -H "Content-Type: application/json" \
+    -d '{"url": "https://www.tiktok.com/@tumimayy/video/7439329943596567863"}' \
+    http://127.0.0.1:5000/process
