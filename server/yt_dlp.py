@@ -14,7 +14,8 @@ download_directory = os.path.join("/tmp", "videos")
 os.makedirs(download_directory, exist_ok=True)
 
 # YT_DLP_BINARY = '/opt/homebrew/bin/yt-dlp'
-YT_DLP_BINARY = '/opt/homebrew/bin/yt-dlp'
+# YT_DLP_BINARY = '/opt/homebrew/bin/yt-dlp'
+YT_DLP_BINARY = 'yt-dlp'
 
 # # app = typer.Typer()
 
@@ -61,51 +62,51 @@ def do_download(url, path):
     else:
         raise Exception(f'Download failed for {url}')
 
-def read_message():
-    """
-    Reads a single message from stdin. Each message starts with a 4-byte
-    little-endian integer indicating the message length.
-    """
-    # Read the 4-byte length prefix
-    raw_length = sys.stdin.buffer.read(4)
-    if not raw_length:
-        return None  # No message received, exit gracefully
-    message_length = struct.unpack('I', raw_length)[0]
-    # Read the message data (JSON payload)
-    message_data = sys.stdin.buffer.read(message_length).decode('utf-8')
-    return message_data
+# def read_message():
+#     """
+#     Reads a single message from stdin. Each message starts with a 4-byte
+#     little-endian integer indicating the message length.
+#     """
+#     # Read the 4-byte length prefix
+#     raw_length = sys.stdin.buffer.read(4)
+#     if not raw_length:
+#         return None  # No message received, exit gracefully
+#     message_length = struct.unpack('I', raw_length)[0]
+#     # Read the message data (JSON payload)
+#     message_data = sys.stdin.buffer.read(message_length).decode('utf-8')
+#     return message_data
 
-def send_message(message_text):
-    """
-    Sends a message to stdout with a 4-byte little-endian length prefix.
-    """
-    # Encode the message as JSON
-    response_json = json.dumps({"response": message_text})
-    encoded_content = response_json.encode('utf-8')
-    content_length = len(encoded_content)
-    # Write the length prefix
-    sys.stdout.buffer.write(struct.pack('I', content_length))
-    # Write the message content
-    sys.stdout.buffer.write(encoded_content)
-    sys.stdout.flush()
+# def send_message(message_text):
+#     """
+#     Sends a message to stdout with a 4-byte little-endian length prefix.
+#     """
+#     # Encode the message as JSON
+#     response_json = json.dumps({"response": message_text})
+#     encoded_content = response_json.encode('utf-8')
+#     content_length = len(encoded_content)
+#     # Write the length prefix
+#     sys.stdout.buffer.write(struct.pack('I', content_length))
+#     # Write the message content
+#     sys.stdout.buffer.write(encoded_content)
+#     sys.stdout.flush()
 
-if __name__ == "__main__":
-    try:
-        while True:
-            # Read a message from Chrome
-            message = read_message()
-            if message is None:
-                break  # Exit if no message is received
+# if __name__ == "__main__":
+#     try:
+#         while True:
+#             # Read a message from Chrome
+#             message = read_message()
+#             if message is None:
+#                 break  # Exit if no message is received
 
-            # Process the message (in this case, just echo it back)
-            # You can add your own processing logic here
-            download(message)
-            send_message(f"Received: {message}")
+#             # Process the message (in this case, just echo it back)
+#             # You can add your own processing logic here
+#             download(message)
+#             send_message(f"Received: {message}")
 
-    except Exception as e:
-        # Send an error response back to Chrome
-        error_message = f"An error occurred: {str(e)}"
-        send_message(error_message)
-        # Optionally, log the error to stderr or a file for debugging
-        print(error_message, file=sys.stderr)
-        sys.exit(1)
+#     except Exception as e:
+#         # Send an error response back to Chrome
+#         error_message = f"An error occurred: {str(e)}"
+#         send_message(error_message)
+#         # Optionally, log the error to stderr or a file for debugging
+#         print(error_message, file=sys.stderr)
+#         sys.exit(1)
